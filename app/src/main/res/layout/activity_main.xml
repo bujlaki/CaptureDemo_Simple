@@ -14,7 +14,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0px"
-        android:layout_weight="9">
+        android:layout_weight="15"
+        android:id="@+id/layoutCapture">
 
     </RelativeLayout>
 
@@ -22,28 +23,34 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0px"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:id="@+id/layoutToolbar">
 
         <Button
             android:text="@string/textBtnRetry"
             android:layout_height="wrap_content"
-            android:id="@+id/button3"
+            android:id="@+id/btnRetry"
             android:layout_weight="2"
-            android:layout_width="0px" />
+            android:layout_width="0px"
+            android:textColor="@color/colorPrimary"
+            android:background="@android:color/transparent"
+            tools:ignore="NestedWeights" />
 
         <Space
-            android:layout_width="wrap_content"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="2" />
 
         <Button
             android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:id="@+id/button2"
-            android:layout_weight="1" />
+            android:id="@+id/btnCapture"
+            android:layout_weight="1"
+            android:background="@android:drawable/ic_menu_camera"
+            android:backgroundTint="@color/colorPrimary" />
 
         <Space
-            android:layout_width="wrap_content"
+            android:layout_width="0px"
             android:layout_height="wrap_content"
             android:layout_weight="2" />
 
@@ -51,8 +58,10 @@
             android:text="@string/textBtnOk"
             android:layout_width="0px"
             android:layout_height="wrap_content"
-            android:id="@+id/button"
-            android:layout_weight="2" />
+            android:id="@+id/btnOK"
+            android:layout_weight="2"
+            android:textColor="@color/colorPrimary"
+            android:background="@android:color/transparent" />
     </LinearLayout>
 
 </LinearLayout>

@@ -1,3 +1,49 @@
 <resources>
     <string name="app_name">CaptureDemo_Simple</string>
+    <string name="splashText1">Capture demo</string>
+    <string name="splashText2">Copyright (c) 2017 Kofax. All rights reserved.</string>
+    <string name="textBtnRetry">Retry</string>
+    <string name="textBtnOk">OK</string>
+
+    <!-- permissions -->
+    <string name="capture_permissions_rationale">This sample needs camera permission.</string>
+    <string name="gallery_permissions_rationale">This sample needs permission to pick images from gallery.</string>
+
+
+    <!-- camera messages -->
+    <string name="msgUserInstruction">Please fit the Document into the Frame</string>
+    <string name="msgZoomIn">Move Closer</string>
+    <string name="msgZoomOut">Move Away</string>
+    <string name="msgCenter">Center Document</string>
+    <string name="msgCaptureDone">Finished</string>
+    <string name="msgHoldSteady">Hold steady</string>
+    <string name="msgHoldParallel">Hold Device parallel</string>
+    <string name="msgRotate">Rotate Device</string>
+
+    <!-- Quick Analysis messages -->
+    <string name="qaBlurry">Blurry</string>
+    <string name="qaOversaturated">Over saturated</string>
+    <string name="qaUndersaturated">Under saturated</string>
+    <string name="qaGlare">Glare detected</string>
+    <string name="qaBadTitle">Poor image quality!</string>
+    <string name="qaBadText1">There are the following quality issues:</string>
+    <string name="qaBadText2">Please capture the page again</string>
+
+    <!-- Capture another page message -->
+    <string name="textAnotherPage">Do you want to capture another page of the document?</string>
+    <string name="textAnotherPageBtnNo">Finished</string>
+    <string name="textAnotherPageBtnYes">Another page</string>
+
+    <!-- Status messages -->
+    <string name="statusQuickAnalysis">Checking Image Quality</string>
+    <string name="statusImageProcessing">Optimizing Document...</string>
+    <string name="statusDataExtraction">Extracting Data...</string>
+    <string name="statusProcessingDocument">Processing Document...</string>
+
+    <!-- Error messages -->
+    <string name="errorTitle">Error!</string>
+    <string name="errorCallingExtraction">Error calling Extraction Service!</string>
+    <string name="errorNoExtractionResult">No Data received</string>
+    <string name="errorCode">Error code</string>
+
 </resources>
