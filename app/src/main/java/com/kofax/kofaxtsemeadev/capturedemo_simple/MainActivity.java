@@ -6,25 +6,33 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-import android.widget.RelativeLayout;
 
 import com.kofax.kmc.ken.engines.ImageProcessor;
 import com.kofax.kmc.ken.engines.data.DocumentDetectionSettings;
+import com.kofax.kmc.kui.uicontrols.CameraInitializationEvent;
+import com.kofax.kmc.kui.uicontrols.CameraInitializationListener;
 import com.kofax.kmc.kui.uicontrols.ImageCaptureView;
+import com.kofax.kmc.kui.uicontrols.ImageCapturedEvent;
+import com.kofax.kmc.kui.uicontrols.ImageCapturedListener;
 import com.kofax.kmc.kui.uicontrols.captureanimations.CaptureMessage;
 import com.kofax.kmc.kui.uicontrols.captureanimations.DocumentCaptureExperience;
 import com.kofax.kmc.kui.uicontrols.captureanimations.DocumentCaptureExperienceCriteriaHolder;
 import com.kofax.kmc.kui.uicontrols.data.Flash;
 import com.kofax.kmc.kui.uicontrols.data.GpsUsageLimits;
+import com.kofax.kmc.kut.utilities.AppContextProvider;
 import com.kofax.kmc.kut.utilities.Licensing;
 import com.kofax.kmc.kut.utilities.error.ErrorInfo;
 
 public class MainActivity extends Activity
-        implements ActivityCompat.OnRequestPermissionsResultCallback,
+        implements
+        ActivityCompat.OnRequestPermissionsResultCallback,
+        CameraInitializationListener,
         ImageProcessor.ImageOutListener
 {
 
     private final PermissionsManager mPermissionsManager = new PermissionsManager(this);
+    private ImageCaptureView mImageCaptureView;
+    private DocumentCaptureExperience mExperience;
 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] results) {
@@ -56,17 +64,20 @@ public class MainActivity extends Activity
         }
     }
 
-
-    private RelativeLayout layoutCapture;
-    private ImageCaptureView mImageCaptureView;
-    private DocumentCaptureExperience mExperience;
+    @Override
+    public void onCameraInitialized(CameraInitializationEvent cameraInitializationEvent) {
+        //The flash can't be set in the onCreate(), only once the camera is initialized
+        if(Global.USE_AUTO_TORCH)
+            mImageCaptureView.setFlash(Flash.AUTOTORCH);
+        else
+            mImageCaptureView.setFlash(Flash.OFF);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        AppContextProvider.setContext(getApplicationContext());
 
-        layoutCapture = (RelativeLayout) findViewById(R.id.layoutCapture);
+        super.onCreate(savedInstanceState);
 
         if(Licensing.setMobileSDKLicense(Global.PROCESS_PAGE_SDK_LICENSE) != ErrorInfo.KMC_SUCCESS)
         {
@@ -86,30 +97,23 @@ public class MainActivity extends Activity
             alertDialog.show();
         }
 
-        if (mPermissionsManager.isGranted(Global.PERMISSIONS_CAPTURE)) {
-            setUp();
-        } else {
+        if (!mPermissionsManager.isGranted(Global.PERMISSIONS_CAPTURE)) {
             mPermissionsManager.request(Global.REQ_CODE_PERMISSIONS_CAPTURE, Global.PERMISSIONS_CAPTURE);
         }
 
+        setContentView(R.layout.activity_main);
         setUp();
     }
 
 
     private void setUp()
     {
-        mImageCaptureView = new ImageCaptureView(this);
-        layoutCapture.addView(mImageCaptureView);
+        mImageCaptureView = (ImageCaptureView) findViewById(R.id.imageVaptureView);
 
         if(Global.USE_LOCATION_SERVICES)
             mImageCaptureView.setGpsUsage(GpsUsageLimits.ALWAYS_USE_IF_ENABLED);
         else
             mImageCaptureView.setGpsUsage(GpsUsageLimits.NEVER_USE);
-
-        if(Global.USE_AUTO_TORCH)
-            mImageCaptureView.setFlash(Flash.AUTOTORCH);
-        else
-            mImageCaptureView.setFlash(Flash.OFF);
 
         mImageCaptureView.setUseVideoFrame(false);
 
@@ -126,15 +130,18 @@ public class MainActivity extends Activity
         DocumentDetectionSettings documentDetectionSettings = new DocumentDetectionSettings();
         documentDetectionSettings.setTargetFrameAspectRatio(29.7/21.0);
         documentDetectionSettings.setTargetFramePaddingPercent(5);
-        documentDetectionSettings.setLongEdgeThreshold(75);
-        documentDetectionSettings.setShortEdgeThreshold(75);
+        documentDetectionSettings.setLongEdgeThreshold(0.75);
+        documentDetectionSettings.setShortEdgeThreshold(0.75);
         documentDetectionSettings.setMinFillFraction(0.65);
         documentDetectionSettings.setMaxFillFraction(1.0);
 
         criteriaHolder.setDetectionSettings(documentDetectionSettings);
         criteriaHolder.setRefocusEnabled(true);
 
-        mExperience = new DocumentCaptureExperience(mImageCaptureView, new DocumentCaptureExperienceCriteriaHolder());
+        mExperience = new DocumentCaptureExperience(mImageCaptureView, criteriaHolder);
+
+        mExperience.addOnImageCapturedListener(mImageCapturedListener);
+
         mExperience.setGuidanceFrameColor(Color.argb(200, 255, 255, 255));
         mExperience.setSteadyGuidanceFrameColor(Color.GREEN);
         mExperience.setOuterViewFinderColor(Color.argb(200, 0, 0, 0));
@@ -180,8 +187,20 @@ public class MainActivity extends Activity
         msg.setOrientation(CaptureMessage.KUIMessageOrientation.PORTRAIT);
         mExperience.setRotateMessage(msg);
 
-        mExperience.takePictureContinually();
+        mExperience.takePicture();
     }
+
+    private final ImageCapturedListener mImageCapturedListener = new ImageCapturedListener() {
+        @Override
+        public void onImageCaptured(final ImageCapturedEvent event) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    //reviewImage(event.getImage());
+                }
+            });
+        }
+    };
 
     @Override
     public void imageOut(ImageProcessor.ImageOutEvent imageOutEvent) {

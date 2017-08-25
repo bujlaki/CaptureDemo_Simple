@@ -12,7 +12,7 @@ public class Global {
     //********************
     // The license string
     //********************
-    public static final String PROCESS_PAGE_SDK_LICENSE = "5nKvP^IkIPUqbcU%T2B8@=F!#rz%6J(BW^dkAL!!6bfj@[j!d00GzNz,E^`N(pNU9Z4!HhgO8lBf?(![x0$Bchkvl;`[r4pmb&,7";
+    public static final String PROCESS_PAGE_SDK_LICENSE = "";
 
     //************************
     // The Extraction service

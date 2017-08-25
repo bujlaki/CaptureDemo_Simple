@@ -17,6 +17,12 @@
         android:layout_weight="15"
         android:id="@+id/layoutCapture">
 
+        <com.kofax.kmc.kui.uicontrols.ImageCaptureView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/imageVaptureView">
+
+        </com.kofax.kmc.kui.uicontrols.ImageCaptureView>
     </RelativeLayout>
 
     <LinearLayout
