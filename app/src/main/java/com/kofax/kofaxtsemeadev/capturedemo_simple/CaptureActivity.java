@@ -328,9 +328,9 @@ public class CaptureActivity extends Activity
         } catch (KmcException e) {
             e.printStackTrace();
         }
-        Intent intent = new Intent(CaptureActivity.this, ReviewActivity.class);
-        intent.putExtra("image_to_show", img);
-        startActivity(intent);
+        //Intent intent = new Intent(CaptureActivity.this, ReviewActivity.class);
+        //intent.putExtra("image_to_show", img);
+        //startActivity(intent);
     }
 
     private void createImageProcessor()
