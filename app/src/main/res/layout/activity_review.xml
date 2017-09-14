@@ -21,7 +21,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/imgReviewControl"
-            android:visibility="invisible">
+            android:visibility="visible">
         </com.kofax.kmc.kui.uicontrols.ImgReviewEditCntrl>
 
     </RelativeLayout>

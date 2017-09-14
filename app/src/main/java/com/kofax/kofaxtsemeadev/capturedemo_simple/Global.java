@@ -138,8 +138,9 @@ public class Global {
     // GLOBAL OBJECTS
     //****************
     // Images and image processor
-    public static Image currentImage;
-    public static ImageProcessor imageProcessor;
+    public static Image currentCapturedImage;
+    public static Image currentProcessedImage;
+
     public static List<Object> theCapturedAndProcessedImageFiles;
 
     // RTTI HTTP Request
@@ -179,6 +180,17 @@ public class Global {
         //...
 
         return document;
+    }
+
+    public static void cleanObjects()
+    {
+        if(Global.theCapturedAndProcessedImageFiles!=null) {
+            Global.theCapturedAndProcessedImageFiles.clear();
+            Global.theCapturedAndProcessedImageFiles = null;
+        }
+
+        Global.currentCapturedImage = null;
+        Global.currentProcessedImage = null;
     }
 
     // Progress indicator
