@@ -140,6 +140,7 @@ public class Global {
     // Images and image processor
     public static Image currentCapturedImage;
     public static Image currentProcessedImage;
+
     public static List<Object> theCapturedAndProcessedImageFiles;
 
     // RTTI HTTP Request

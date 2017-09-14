@@ -32,6 +32,7 @@ public class ReviewActivity extends Activity
     private Button btnOk;
     private Button btnRetry;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -7,15 +7,18 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
+
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.kofax.kmc.ken.engines.data.DocumentDetectionSettings;
+
 import com.kofax.kmc.kui.uicontrols.CameraInitializationEvent;
 import com.kofax.kmc.kui.uicontrols.CameraInitializationListener;
 import com.kofax.kmc.kui.uicontrols.ImageCaptureView;
 import com.kofax.kmc.kui.uicontrols.ImageCapturedEvent;
 import com.kofax.kmc.kui.uicontrols.ImageCapturedListener;
+
 import com.kofax.kmc.kui.uicontrols.captureanimations.CaptureMessage;
 import com.kofax.kmc.kui.uicontrols.captureanimations.DocumentCaptureExperience;
 import com.kofax.kmc.kui.uicontrols.captureanimations.DocumentCaptureExperienceCriteriaHolder;
@@ -38,6 +41,7 @@ public class CaptureActivity extends Activity
     private ImageCaptureView imageCaptureView;
     private Button btnManual;
     private DocumentCaptureExperience documentCaptureExperience;
+
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] results) {
         if (requestCode == Global.REQ_CODE_PERMISSIONS_CAPTURE) {
