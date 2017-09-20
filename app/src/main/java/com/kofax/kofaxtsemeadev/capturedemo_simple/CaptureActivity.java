@@ -7,18 +7,15 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
-
+import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.kofax.kmc.ken.engines.data.DocumentDetectionSettings;
-
 import com.kofax.kmc.kui.uicontrols.CameraInitializationEvent;
 import com.kofax.kmc.kui.uicontrols.CameraInitializationListener;
 import com.kofax.kmc.kui.uicontrols.ImageCaptureView;
 import com.kofax.kmc.kui.uicontrols.ImageCapturedEvent;
 import com.kofax.kmc.kui.uicontrols.ImageCapturedListener;
-
 import com.kofax.kmc.kui.uicontrols.captureanimations.CaptureMessage;
 import com.kofax.kmc.kui.uicontrols.captureanimations.DocumentCaptureExperience;
 import com.kofax.kmc.kui.uicontrols.captureanimations.DocumentCaptureExperienceCriteriaHolder;
@@ -41,7 +38,6 @@ public class CaptureActivity extends Activity
     private ImageCaptureView imageCaptureView;
     private Button btnManual;
     private DocumentCaptureExperience documentCaptureExperience;
-
 
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] results) {
         if (requestCode == Global.REQ_CODE_PERMISSIONS_CAPTURE) {
@@ -110,10 +106,19 @@ public class CaptureActivity extends Activity
         }
 
         setContentView(R.layout.activity_capture);
+
         imageCaptureView = (ImageCaptureView)findViewById(R.id.imageCaptureView);
         btnManual = (Button)findViewById(R.id.btnCapture);
+
         initializeCaptureControlWithDocumentCaptureExperience();
 
+        btnManual.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                documentCaptureExperience.stopCapture();
+                imageCaptureView.forceTakePicture(true);
+            }
+        });
         Global.theCapturedAndProcessedImageFiles = new ArrayList<>();
     }
 
@@ -241,6 +246,7 @@ public class CaptureActivity extends Activity
     @Override
     public void onImageCaptured(ImageCapturedEvent imageCapturedEvent) {
         Global.currentCapturedImage = imageCapturedEvent.getImage();
+        Global.processStatus = Global.PROCESSSTATUS.PS_IMAGE_CAPTURED;
         Intent intent = new Intent(CaptureActivity.this, ReviewActivity.class);
         startActivity(intent);
     }

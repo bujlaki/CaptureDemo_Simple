@@ -45,5 +45,7 @@
     <string name="errorCallingExtraction">Error calling Extraction Service!</string>
     <string name="errorNoExtractionResult">No Data received</string>
     <string name="errorCode">Error code</string>
+    <string name="TEXT_READY_TO_SUBMIT">Ready to submit captured images.</string>
+    <string name="TEXT_BTN_SUBMIT">SUBMIT</string>
 
 </resources>

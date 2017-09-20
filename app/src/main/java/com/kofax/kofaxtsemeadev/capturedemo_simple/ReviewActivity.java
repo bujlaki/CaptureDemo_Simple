@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.kofax.kmc.ken.engines.ImageProcessor;
 import com.kofax.kmc.ken.engines.data.Image;
@@ -32,7 +31,6 @@ public class ReviewActivity extends Activity
     private Button btnOk;
     private Button btnRetry;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,14 +47,20 @@ public class ReviewActivity extends Activity
     @Override
     protected void onStart() {
         super.onStart();
-
-        showImage(Global.currentCapturedImage);
+        if(Global.processStatus == Global.PROCESSSTATUS.PS_IMAGE_PROCESSING_FINISHED)
+        {
+            showImage(Global.currentProcessedImage);
+        }else {
+            showImage(Global.currentCapturedImage);
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        doQuickAnalysis(Global.currentCapturedImage);
+
+        if(Global.processStatus == Global.PROCESSSTATUS.PS_IMAGE_CAPTURED)
+            doQuickAnalysis(Global.currentCapturedImage);
     }
 
     @Override
@@ -348,7 +352,8 @@ public class ReviewActivity extends Activity
                 return;
             }
 
-            Global.theCapturedAndProcessedImageFiles.add(imageData);
+            Global.currentProcessedImage = imageOutEvent.getImage();
+            Global.theCapturedAndProcessedImageFiles.add(Global.currentProcessedImage);
             Global.processStatus = Global.PROCESSSTATUS.PS_IMAGE_PROCESSING_FINISHED;
 
             Global.hideProgressDialog();
@@ -358,7 +363,7 @@ public class ReviewActivity extends Activity
                 if(Global.DO_EXTRACTION){
                     //call extraction
                 } else {
-                    // finish
+                    finish();
                 }
             } else {
                 showOkRetryButtons(true);

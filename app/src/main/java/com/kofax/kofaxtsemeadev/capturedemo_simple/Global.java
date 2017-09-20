@@ -109,7 +109,9 @@ public class Global {
     //*******
     public enum PROCESSSTATUS {
         PS_START,
+        PS_IMAGE_CAPTURED,
         PS_QUICK_ANALYSIS,
+        PS_QUICK_ANALYSIS_FINISHED,
         PS_IMAGE_PROCESSING,
         PS_IMAGE_PROCESSING_FINISHED,
         PS_DATA_EXTRACTION,
@@ -141,7 +143,7 @@ public class Global {
     public static Image currentCapturedImage;
     public static Image currentProcessedImage;
 
-    public static List<Object> theCapturedAndProcessedImageFiles;
+    public static List<Image> theCapturedAndProcessedImageFiles;
 
     // RTTI HTTP Request
     public static  String connectionData;
